@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { notes } from "@/data/notes";
+import prisma from "@/lib/prisma";
 
-export default function NotesPage() {
+export default async function NotesPage() {
+  const notes = await prisma.note.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
   return (
     <main className="p-10">
       <h1 className="text-3xl font-bold">학습노트</h1>
