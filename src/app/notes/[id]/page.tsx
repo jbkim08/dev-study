@@ -1,4 +1,5 @@
 import { notes } from "@/data/notes";
+import { notFound } from "next/navigation";
 
 export default async function NoteDetailPage({
   params,
@@ -11,7 +12,7 @@ export default async function NoteDetailPage({
   const note = notes.find((note) => note.id === Number(id));
   //노트가 없는 경우
   if (!note) {
-    return <main className="p-10">노트를 찾을 수 없습니다.</main>;
+    notFound();
   }
 
   return (
