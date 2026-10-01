@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-const notes = [
-  { id: 1, title: "JavaScript 복습" },
-  { id: 2, title: "React 정리" },
-  { id: 3, title: "Next.js 공부" },
-];
+import { notes } from "@/data/notes";
 
 export default function NotesPage() {
   return (
