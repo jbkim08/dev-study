@@ -30,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             DevStudy
           </Link>
 
+          <Link href="/notes">학습노트</Link>
           <Link href="/about">About</Link>
         </header>
 
