@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: devstudy-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: devstudy
+      POSTGRES_PASSWORD: devstudy1234
+      POSTGRES_DB: devstudy
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
