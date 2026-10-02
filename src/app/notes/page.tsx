@@ -12,10 +12,20 @@ export default async function NotesPage({
   const notes = await prisma.note.findMany({
     where: keyword
       ? {
-          title: {
-            contains: keyword,
-            mode: "insensitive",
-          },
+          OR: [
+            {
+              title: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+            {
+              content: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+          ],
         }
       : undefined,
     orderBy: {
