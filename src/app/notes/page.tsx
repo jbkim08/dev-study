@@ -1,8 +1,23 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 
-export default async function NotesPage() {
+export default async function NotesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q = "" } = await searchParams;
+  const keyword = q.trim();
+
   const notes = await prisma.note.findMany({
+    where: keyword
+      ? {
+          title: {
+            contains: keyword,
+            mode: "insensitive",
+          },
+        }
+      : undefined,
     orderBy: {
       id: "asc",
     },
