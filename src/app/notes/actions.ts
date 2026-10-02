@@ -5,8 +5,12 @@ import { redirect } from "next/navigation";
 
 //[서버액션함수] 새 노트 작성(폼데이터 입력)
 export async function createNote(formData: FormData) {
-  const title = formData.get("title") as string;
-  const content = formData.get("content") as string;
+  const title = String(formData.get("title") ?? "").trim();
+  const content = String(formData.get("content") ?? "").trim();
+
+  if (!title || !content) {
+    return;
+  }
 
   await prisma.note.create({
     data: {

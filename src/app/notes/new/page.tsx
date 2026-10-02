@@ -14,6 +14,8 @@ export default function NewNotePage() {
             name="title"
             className="w-full border p-3"
             placeholder="제목을 입력하세요"
+            required
+            minLength={2}
           />
         </div>
 
@@ -25,6 +27,8 @@ export default function NewNotePage() {
             className="w-full border p-3"
             rows={8}
             placeholder="공부한 내용을 입력하세요"
+            required
+            minLength={5}
           />
         </div>
 
