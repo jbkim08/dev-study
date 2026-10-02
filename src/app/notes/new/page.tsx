@@ -1,9 +1,11 @@
+import { createNote } from "../actions";
+
 export default function NewNotePage() {
   return (
     <main className="p-10">
       <h1 className="text-3xl font-bold">학습노트 작성</h1>
 
-      <form className="mt-6 max-w-xl space-y-4">
+      <form action={createNote} className="mt-6 max-w-xl space-y-4">
         <div>
           <label className="block mb-2">제목</label>
 
