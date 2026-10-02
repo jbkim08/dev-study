@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export async function createNote(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   const content = String(formData.get("content") ?? "").trim();
-
+  //제목이나 내용이 없으면 종료
   if (!title || !content) {
     return;
   }
