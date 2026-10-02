@@ -10,6 +10,18 @@ export default async function NotesPage() {
   return (
     <main className="p-10">
       <h1 className="text-3xl font-bold">학습노트</h1>
+      <form action="/notes" method="get" className="mt-5 flex gap-2">
+        <input
+          type="text"
+          name="q"
+          placeholder="제목 검색"
+          className="border p-2"
+        />
+
+        <button type="submit" className="border px-4 py-2">
+          검색
+        </button>
+      </form>
 
       <Link href="/notes/new" className="mt-4 inline-block border px-4 py-2">
         새 노트 작성
