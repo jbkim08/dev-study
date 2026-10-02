@@ -29,7 +29,7 @@ export default async function NotesPage({
         }
       : undefined,
     orderBy: {
-      id: "asc",
+      createdAt: "desc",
     },
   });
   return (
