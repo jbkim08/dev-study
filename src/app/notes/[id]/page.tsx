@@ -1,4 +1,4 @@
-import { notes } from "@/data/notes";
+import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
 export default async function NoteDetailPage({
@@ -8,9 +8,18 @@ export default async function NoteDetailPage({
 }) {
   const { id } = await params;
 
-  //노트데이터에서 id가 같은 노트를 찾음
-  const note = notes.find((note) => note.id === Number(id));
-  //노트가 없는 경우
+  const noteId = Number(id);
+
+  if (Number.isNaN(noteId)) {
+    notFound();
+  }
+  // DB에서 한개의 노트 가져오기
+  const note = await prisma.note.findUnique({
+    where: {
+      id: noteId,
+    },
+  });
+
   if (!note) {
     notFound();
   }
