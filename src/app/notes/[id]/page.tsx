@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function NoteDetailPage({
@@ -29,6 +30,13 @@ export default async function NoteDetailPage({
       <h1 className="text-3xl font-bold">{note.title}</h1>
 
       <p className="mt-5">{note.content}</p>
+
+      <Link
+        href={`/notes/${note.id}/edit`}
+        className="mt-6 inline-block text-blue-500"
+      >
+        수정하기
+      </Link>
     </main>
   );
 }
