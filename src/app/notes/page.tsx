@@ -53,15 +53,25 @@ export default async function NotesPage({
       </Link>
 
       <div className="mt-6 space-y-3">
-        {notes.map((note) => (
-          <Link
-            key={note.id}
-            href={`/notes/${note.id}`}
-            className="block border p-4"
-          >
-            {note.title}
-          </Link>
-        ))}
+        {notes.length === 0 ? (
+          <div className="border p-4">
+            <p>검색 결과가 없습니다.</p>
+
+            <Link href="/notes" className="mt-3 inline-block text-blue-500">
+              전체 목록 보기
+            </Link>
+          </div>
+        ) : (
+          notes.map((note) => (
+            <Link
+              key={note.id}
+              href={`/notes/${note.id}`}
+              className="block border p-4"
+            >
+              {note.title}
+            </Link>
+          ))
+        )}
       </div>
     </main>
   );
