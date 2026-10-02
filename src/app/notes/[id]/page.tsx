@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { deleteNote } from "../actions";
 
 export default async function NoteDetailPage({
   params,
@@ -24,6 +25,8 @@ export default async function NoteDetailPage({
   if (!note) {
     notFound();
   }
+  //액션함수 deleteNote에 id를 먼저 입력함
+  const deleteNoteWithId = deleteNote.bind(null, note.id);
 
   return (
     <main className="p-10">
@@ -37,6 +40,12 @@ export default async function NoteDetailPage({
       >
         수정하기
       </Link>
+
+      <form action={deleteNoteWithId} className="mt-4">
+        <button type="submit" className="border px-4 py-2 text-red-500">
+          삭제하기
+        </button>
+      </form>
     </main>
   );
 }

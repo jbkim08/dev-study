@@ -35,3 +35,13 @@ export async function updateNote(id: number, formData: FormData) {
 
   redirect(`/notes/${id}`);
 }
+
+export async function deleteNote(id: number) {
+  await prisma.note.delete({
+    where: {
+      id,
+    },
+  });
+
+  redirect("/notes");
+}
