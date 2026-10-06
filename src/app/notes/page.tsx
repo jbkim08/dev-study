@@ -8,8 +8,13 @@ export default async function NotesPage({
 }) {
   const { q = "", page = "1" } = await searchParams;
   const keyword = q.trim();
-  const currentPage = Math.max(Number(page) || 1, 1);
+  const requestedPage = Math.max(Number(page) || 1, 1);
   const pageSize = 5; //한페이지 5개
+  //전체 게시글 개수 구하기
+  const totalCount = await prisma.note.count(); //전체 note db의 글갯수
+  const totalPages = Math.max(Math.ceil(totalCount / pageSize));
+  //최종 페이지는 총페이지보다 크지 않게
+  const currentPage = Math.min(requestedPage, totalPages);
   const skip = (currentPage - 1) * pageSize;
 
   const notes = await prisma.note.findMany({
@@ -34,6 +39,8 @@ export default async function NotesPage({
     orderBy: {
       createdAt: "desc",
     },
+    skip,
+    take: pageSize,
   });
   return (
     <main className="p-10">
@@ -54,7 +61,7 @@ export default async function NotesPage({
       <Link href="/notes/new" className="mt-4 inline-block border px-4 py-2">
         새 노트 작성
       </Link>
-
+      {/* 노트 목록 */}
       <div className="mt-6 space-y-3">
         {notes.length === 0 ? (
           <div className="border p-4">
@@ -80,6 +87,30 @@ export default async function NotesPage({
               </p>
             </Link>
           ))
+        )}
+      </div>
+      {/* 이전 다음 버튼 */}
+      <div className="mt-6 flex items-center gap-4">
+        {currentPage > 1 && (
+          <Link
+            href={`/notes?page=${currentPage - 1}&q=${encodeURIComponent(q)}`}
+            className="border px-4 py-2"
+          >
+            이전
+          </Link>
+        )}
+
+        <span>
+          {currentPage} / {totalPages}
+        </span>
+
+        {currentPage < totalPages && (
+          <Link
+            href={`/notes?page=${currentPage + 1}&q=${encodeURIComponent(q)}`}
+            className="border px-4 py-2"
+          >
+            다음
+          </Link>
         )}
       </div>
     </main>
