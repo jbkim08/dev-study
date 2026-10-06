@@ -78,6 +78,8 @@ export default async function NotesPage({
         </button>
       </form>
 
+      <p className="mt-4 text-sm text-gray-500">총 {totalCount}개의 학습노트</p>
+
       <Link href="/notes/new" className="mt-4 inline-block border px-4 py-2">
         새 노트 작성
       </Link>
@@ -96,11 +98,17 @@ export default async function NotesPage({
             <Link
               key={note.id}
               href={`/notes/${note.id}`}
-              className="block border p-4"
+              className="block rounded-lg border p-5 hover:bg-gray-50"
             >
-              <h2 className="font-bold">{note.title}</h2>
+              <h2 className="text-lg font-bold">{note.title}</h2>
 
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-gray-600">
+                {note.content.length > 60
+                  ? `${note.content.slice(0, 60)}...`
+                  : note.content}
+              </p>
+
+              <p className="mt-3 text-sm text-gray-400">
                 {note.createdAt.toLocaleDateString("ko-KR", {
                   timeZone: "Asia/Seoul",
                 })}
