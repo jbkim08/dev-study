@@ -68,7 +68,13 @@ export default async function NotesPage({
               href={`/notes/${note.id}`}
               className="block border p-4"
             >
-              {note.title}
+              <h2 className="font-bold">{note.title}</h2>
+
+              <p className="mt-2 text-sm text-gray-500">
+                {note.createdAt.toLocaleDateString("ko-KR", {
+                  timeZone: "Asia/Seoul",
+                })}
+              </p>
             </Link>
           ))
         )}
