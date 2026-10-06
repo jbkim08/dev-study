@@ -124,7 +124,9 @@ export default async function NotesPage({
           <Link
             key={pageNumber}
             href={`/notes?page=${pageNumber}&q=${encodeURIComponent(q)}`}
-            className="border px-3 py-2"
+            className={`border px-3 py-2 ${
+              currentPage === pageNumber ? "bg-black text-white" : "bg-white"
+            }`}
           >
             {pageNumber}
           </Link>
