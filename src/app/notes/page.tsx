@@ -11,7 +11,26 @@ export default async function NotesPage({
   const requestedPage = Math.max(Number(page) || 1, 1);
   const pageSize = 5; //한페이지 5개
   //전체 게시글 개수 구하기
-  const totalCount = await prisma.note.count(); //전체 note db의 글갯수
+  const totalCount = await prisma.note.count({
+    where: keyword
+      ? {
+          OR: [
+            {
+              title: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+            {
+              content: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+          ],
+        }
+      : undefined,
+  });
   const totalPages = Math.max(Math.ceil(totalCount / pageSize));
   //최종 페이지는 총페이지보다 크지 않게
   const currentPage = Math.min(requestedPage, totalPages);
