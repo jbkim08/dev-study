@@ -32,6 +32,7 @@ export default async function NotesPage({
       : undefined,
   });
   const totalPages = Math.max(Math.ceil(totalCount / pageSize));
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
   //최종 페이지는 총페이지보다 크지 않게
   const currentPage = Math.min(requestedPage, totalPages);
   const skip = (currentPage - 1) * pageSize;
@@ -119,9 +120,15 @@ export default async function NotesPage({
           </Link>
         )}
 
-        <span>
-          {currentPage} / {totalPages}
-        </span>
+        {pages.map((pageNumber) => (
+          <Link
+            key={pageNumber}
+            href={`/notes?page=${pageNumber}&q=${encodeURIComponent(q)}`}
+            className="border px-3 py-2"
+          >
+            {pageNumber}
+          </Link>
+        ))}
 
         {currentPage < totalPages && (
           <Link
