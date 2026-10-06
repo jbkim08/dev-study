@@ -4,10 +4,13 @@ import prisma from "@/lib/prisma";
 export default async function NotesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; page?: string }>;
 }) {
-  const { q = "" } = await searchParams;
+  const { q = "", page = "1" } = await searchParams;
   const keyword = q.trim();
+  const currentPage = Math.max(Number(page) || 1, 1);
+  const pageSize = 5; //한페이지 5개
+  const skip = (currentPage - 1) * pageSize;
 
   const notes = await prisma.note.findMany({
     where: keyword
