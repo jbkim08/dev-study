@@ -25,3 +25,10 @@ model Course {
   description String
   createdAt   DateTime @default(now())
 }
+
+model Lesson {
+  id        Int      @id @default(autoincrement())
+  title     String
+  position  Int
+  createdAt DateTime @default(now())
+}
