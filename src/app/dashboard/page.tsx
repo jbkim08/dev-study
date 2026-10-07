@@ -3,6 +3,12 @@ import prisma from "@/lib/prisma";
 
 export default async function DashboardPage() {
   const noteCount = await prisma.note.count();
+  const recentNotes = await prisma.note.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 3,
+  });
 
   return (
     <main className="p-10">
@@ -17,6 +23,28 @@ export default async function DashboardPage() {
       <Link href="/notes" className="mt-6 inline-block text-blue-500">
         학습노트 보러가기
       </Link>
+
+      <section className="mt-8 max-w-2xl">
+        <h2 className="text-xl font-bold">최근 학습노트</h2>
+
+        <div className="mt-4 space-y-3">
+          {recentNotes.map((note) => (
+            <Link
+              key={note.id}
+              href={`/notes/${note.id}`}
+              className="block rounded-lg border p-4"
+            >
+              <p className="font-bold">{note.title}</p>
+
+              <p className="mt-2 text-sm text-gray-500">
+                {note.createdAt.toLocaleDateString("ko-KR", {
+                  timeZone: "Asia/Seoul",
+                })}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
