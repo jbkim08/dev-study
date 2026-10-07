@@ -19,6 +19,13 @@ export default async function CourseDetailPage({
     where: {
       id: courseId,
     },
+    include: {
+      lessons: {
+        orderBy: {
+          position: "asc",
+        },
+      },
+    },
   });
 
   if (!course) {
