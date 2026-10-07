@@ -48,13 +48,17 @@ export default async function CourseDetailPage({
             </p>
           ) : (
             course.lessons.map((lesson) => (
-              <div key={lesson.id} className="rounded-lg border p-4">
+              <Link
+                href={`/lessons/${lesson.id}`}
+                key={lesson.id}
+                className="block rounded-lg border p-4"
+              >
                 <p className="text-sm text-gray-500">
                   Lesson {lesson.position}
                 </p>
 
                 <h3 className="mt-1 font-bold">{lesson.title}</h3>
-              </div>
+              </Link>
             ))
           )}
         </div>
