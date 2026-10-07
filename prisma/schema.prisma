@@ -30,6 +30,7 @@ model Course {
 model Lesson {
   id        Int      @id @default(autoincrement())
   title     String
+  content   String   @default("")
   position  Int
   createdAt DateTime @default(now())
   courseId  Int
