@@ -24,6 +24,7 @@ model Course {
   title       String
   description String
   createdAt   DateTime @default(now())
+  lessons     Lesson[]
 }
 
 model Lesson {
@@ -31,4 +32,6 @@ model Lesson {
   title     String
   position  Int
   createdAt DateTime @default(now())
+  courseId  Int
+  course   Course @relation(fields: [courseId], references: [id])
 }
