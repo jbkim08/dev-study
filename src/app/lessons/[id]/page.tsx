@@ -30,6 +30,12 @@ export default async function LessonDetailPage({
 
       <h1 className="mt-2 text-3xl font-bold">{lesson.title}</h1>
 
+      <div className="mt-8 rounded-lg border p-6">
+        <p className="whitespace-pre-wrap leading-7 text-gray-700">
+          {lesson.content}
+        </p>
+      </div>
+
       <Link
         href={`/courses/${lesson.courseId}`}
         className="mt-8 inline-block text-blue-500"
