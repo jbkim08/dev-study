@@ -9,7 +9,15 @@ export default async function DashboardPage() {
     },
     take: 3,
   });
-
+  const sevenDaysAgo = new Date(); //오늘 날짜
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); //7일전 날짜
+  const recentCount = await prisma.note.count({
+    where: {
+      createdAt: {
+        gte: sevenDaysAgo,
+      },
+    },
+  });
   return (
     <main className="p-10">
       <h1 className="text-3xl font-bold">대시보드</h1>
@@ -18,6 +26,12 @@ export default async function DashboardPage() {
         <p className="text-gray-500">전체 학습노트</p>
 
         <p className="mt-2 text-3xl font-bold">{noteCount}</p>
+      </div>
+
+      <div className="mt-6 max-w-sm rounded-lg border p-5">
+        <p className="text-gray-500">최근 7일 작성</p>
+
+        <p className="mt-2 text-3xl font-bold">{recentCount}</p>
       </div>
 
       <Link href="/notes" className="mt-6 inline-block text-blue-500">
