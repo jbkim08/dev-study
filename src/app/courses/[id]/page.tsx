@@ -32,11 +32,43 @@ export default async function CourseDetailPage({
     notFound();
   }
 
+  const completedLessons = course.lessons.filter(
+    (lesson) => lesson.completed,
+  ).length; //완료된 레슨 갯수
+
+  const totalLessons = course.lessons.length; //레슨의 총 갯수
+
+  const progress =
+    totalLessons === 0
+      ? 0
+      : Math.round((completedLessons / totalLessons) * 100);
+
   return (
     <main className="mx-auto max-w-4xl p-10">
       <h1 className="text-3xl font-bold">{course.title}</h1>
 
       <p className="mt-5 text-gray-600">{course.description}</p>
+
+      <div className="mt-8">
+        <div className="flex items-center justify-between">
+          <span className="font-bold">학습 진행률</span>
+
+          <span>{progress}%</span>
+        </div>
+
+        <div className="mt-2 h-3 overflow-hidden rounded-full bg-gray-200">
+          <div
+            className="h-full bg-black"
+            style={{
+              width: `${progress}%`,
+            }}
+          />
+        </div>
+
+        <p className="mt-2 text-sm text-gray-500">
+          {completedLessons} / {totalLessons} 완료
+        </p>
+      </div>
 
       <section className="mt-10">
         <h2 className="text-xl font-bold">학습 순서</h2>
@@ -58,6 +90,9 @@ export default async function CourseDetailPage({
                 </p>
 
                 <h3 className="mt-1 font-bold">{lesson.title}</h3>
+                <p className="mt-2 text-sm text-gray-500">
+                  {lesson.completed ? "✅ 완료" : "학습 전"}
+                </p>
               </Link>
             ))
           )}
