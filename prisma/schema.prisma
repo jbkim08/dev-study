@@ -32,6 +32,7 @@ model Lesson {
   title     String
   content   String   @default("")
   position  Int
+  completed Boolean  @default(false)
   createdAt DateTime @default(now())
   courseId  Int
   course   Course @relation(fields: [courseId], references: [id])
