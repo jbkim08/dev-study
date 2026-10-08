@@ -1,6 +1,7 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { completeLesson } from "../actions";
 
 export default async function LessonDetailPage({
   params,
@@ -24,6 +25,12 @@ export default async function LessonDetailPage({
     notFound();
   }
 
+  const completeLessonWithId = completeLesson.bind(
+    null,
+    lesson.id,
+    lesson.courseId,
+  );
+
   return (
     <main className="mx-auto max-w-4xl p-10">
       <p className="text-sm text-gray-500">Lesson {lesson.position}</p>
@@ -35,6 +42,19 @@ export default async function LessonDetailPage({
           {lesson.content}
         </p>
       </div>
+
+      {lesson.completed ? (
+        <div className="mt-6 rounded-lg bg-gray-100 p-4">✅ 학습 완료</div>
+      ) : (
+        <form action={completeLessonWithId} className="mt-6">
+          <button
+            type="submit"
+            className="rounded-lg bg-black px-5 py-2 text-white"
+          >
+            학습 완료
+          </button>
+        </form>
+      )}
 
       <Link
         href={`/courses/${lesson.courseId}`}
