@@ -17,7 +17,14 @@ export default async function CoursesPage() {
 
   return (
     <main className="mx-auto max-w-4xl p-10">
-      <h1 className="text-3xl font-bold">학습 코스</h1>
+      <h1 className="text-3xl font-bold inline-block mr-7">학습 코스</h1>
+
+      <Link
+        href="/courses/new"
+        className="mt-5 inline-block rounded-lg bg-black px-4 py-2 text-white"
+      >
+        새 코스 등록
+      </Link>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {courses.map((course) => {
