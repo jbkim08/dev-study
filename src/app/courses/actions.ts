@@ -70,3 +70,36 @@ export async function deleteCourse(id: number) {
 
   redirect("/courses");
 }
+
+export async function createLesson(courseId: number, formData: FormData) {
+  const title = String(formData.get("title") ?? "").trim();
+
+  const content = String(formData.get("content") ?? "").trim();
+
+  if (!title || !content) {
+    return;
+  }
+
+  const lessonCount = await prisma.lesson.count({
+    where: {
+      courseId,
+    },
+  });
+
+  const position = lessonCount + 1;
+
+  await prisma.lesson.create({
+    data: {
+      title,
+      content,
+      position,
+      courseId,
+    },
+  });
+
+  revalidatePath(`/courses/${courseId}`);
+  revalidatePath("/courses");
+  revalidatePath("/dashboard");
+
+  redirect(`/courses/${courseId}`);
+}

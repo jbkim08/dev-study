@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { createLesson } from "@/app/courses/actions";
 
 export default async function NewLessonPage({
   params,
@@ -24,13 +25,15 @@ export default async function NewLessonPage({
     notFound();
   }
 
+  const createLessonWithCourseId = createLesson.bind(null, course.id);
+
   return (
     <main className="mx-auto max-w-2xl p-10">
       <p className="text-sm text-gray-500">{course.title}</p>
 
       <h1 className="mt-2 text-3xl font-bold">새 Lesson 등록</h1>
 
-      <form className="mt-6 space-y-4">
+      <form action={createLessonWithCourseId} className="mt-6 space-y-4">
         <div>
           <label className="mb-2 block">Lesson 제목</label>
 
@@ -58,7 +61,7 @@ export default async function NewLessonPage({
         </div>
 
         <button
-          type="button"
+          type="submit"
           className="rounded-lg bg-black px-5 py-2 text-white"
         >
           Lesson 등록
