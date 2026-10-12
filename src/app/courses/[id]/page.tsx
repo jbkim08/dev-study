@@ -83,6 +83,13 @@ export default async function CourseDetailPage({
       <section className="mt-10">
         <h2 className="text-xl font-bold">학습 순서</h2>
 
+        <Link
+          href={`/courses/${course.id}/lessons/new`}
+          className="text-sm text-blue-500"
+        >
+          Lesson 추가
+        </Link>
+
         <div className="mt-4 space-y-3">
           {course.lessons.length === 0 ? (
             <p className="rounded-lg border p-4 text-gray-500">
