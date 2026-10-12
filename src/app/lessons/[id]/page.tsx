@@ -49,6 +49,13 @@ export default async function LessonDetailPage({
         </p>
       </div>
 
+      <Link
+        href={`/lessons/${lesson.id}/edit`}
+        className="mt-6 inline-block text-blue-500"
+      >
+        Lesson 수정하기
+      </Link>
+
       {lesson.completed ? (
         <div className="mt-6">
           <p className="rounded-lg bg-gray-100 p-4">✅ 학습 완료</p>
