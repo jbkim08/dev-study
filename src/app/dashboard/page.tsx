@@ -22,6 +22,14 @@ export default async function DashboardPage() {
     take: 3,
   });
 
+  const courseCount = await prisma.course.count();
+  const lessonCount = await prisma.lesson.count();
+  const completedLessonCount = await prisma.lesson.count({
+    where: {
+      completed: true,
+    },
+  });
+
   return (
     <main className="mx-auto max-w-5xl p-10">
       <div className="flex items-center justify-between">
@@ -35,7 +43,7 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-lg border p-5">
           <p className="text-gray-500">전체 학습노트</p>
 
@@ -46,6 +54,20 @@ export default async function DashboardPage() {
           <p className="text-gray-500">최근 7일 작성</p>
 
           <p className="mt-2 text-3xl font-bold">{recentCount}</p>
+        </div>
+
+        <div className="rounded-lg border p-5">
+          <p className="text-gray-500">전체 코스</p>
+
+          <p className="mt-2 text-3xl font-bold">{courseCount}</p>
+        </div>
+
+        <div className="rounded-lg border p-5">
+          <p className="text-gray-500">완료 Lesson</p>
+
+          <p className="mt-2 text-3xl font-bold">{completedLessonCount}</p>
+
+          <p className="mt-1 text-sm text-gray-500">전체 {lessonCount}개</p>
         </div>
       </div>
 
