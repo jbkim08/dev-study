@@ -1,9 +1,11 @@
+import { createCourse } from "../actions";
+
 export default function NewCoursePage() {
   return (
     <main className="mx-auto max-w-2xl p-10">
       <h1 className="text-3xl font-bold">새 코스 등록</h1>
 
-      <form className="mt-6 space-y-4">
+      <form action={createCourse} className="mt-6 space-y-4">
         <div>
           <label className="mb-2 block">코스 제목</label>
 
