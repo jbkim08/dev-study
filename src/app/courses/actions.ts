@@ -23,3 +23,28 @@ export async function createCourse(formData: FormData) {
   revalidatePath("/courses");
   redirect(`/courses/${course.id}`);
 }
+
+export async function updateCourse(id: number, formData: FormData) {
+  const title = String(formData.get("title") ?? "").trim();
+
+  const description = String(formData.get("description") ?? "").trim();
+
+  if (!title || !description) {
+    return;
+  }
+
+  await prisma.course.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+      description,
+    },
+  });
+
+  revalidatePath("/courses");
+  revalidatePath(`/courses/${id}`);
+
+  redirect(`/courses/${id}`);
+}
