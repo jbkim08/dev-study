@@ -1,6 +1,7 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { deleteCourse } from "../actions";
 
 export default async function CourseDetailPage({
   params,
@@ -43,11 +44,20 @@ export default async function CourseDetailPage({
       ? 0
       : Math.round((completedLessons / totalLessons) * 100);
 
+  const deleteCourseWithId = deleteCourse.bind(null, course.id);
+
   return (
     <main className="mx-auto max-w-4xl p-10">
       <h1 className="text-3xl font-bold">{course.title}</h1>
 
       <p className="mt-5 text-gray-600">{course.description}</p>
+
+      <Link
+        href={`/courses/${course.id}/edit`}
+        className="mt-6 inline-block text-blue-500"
+      >
+        코스 수정하기
+      </Link>
 
       <div className="mt-8">
         <div className="flex items-center justify-between">
@@ -98,6 +108,15 @@ export default async function CourseDetailPage({
           )}
         </div>
       </section>
+
+      <form action={deleteCourseWithId} className="mt-4">
+        <button
+          type="submit"
+          className="rounded-lg border px-4 py-2 text-red-500"
+        >
+          코스 삭제
+        </button>
+      </form>
 
       <Link href="/courses" className="mt-6 inline-block text-blue-500">
         코스 목록으로 돌아가기
