@@ -21,3 +21,22 @@ export async function completeLesson(
   revalidatePath(`/lessons/${id}`);
   revalidatePath(`/courses/${courseId}`);
 }
+
+//completed를 false로 업데이트
+export async function uncompleteLesson(
+  id: number,
+  courseId: number,
+  _formData: FormData,
+) {
+  await prisma.lesson.update({
+    where: {
+      id,
+    },
+    data: {
+      completed: false,
+    },
+  });
+
+  revalidatePath(`/lessons/${id}`);
+  revalidatePath(`/courses/${courseId}`);
+}
