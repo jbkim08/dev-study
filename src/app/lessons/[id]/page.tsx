@@ -1,7 +1,7 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { completeLesson, uncompleteLesson } from "../actions";
+import { completeLesson, uncompleteLesson, deleteLesson } from "../actions";
 
 export default async function LessonDetailPage({
   params,
@@ -32,6 +32,12 @@ export default async function LessonDetailPage({
   );
 
   const uncompleteLessonWithId = uncompleteLesson.bind(
+    null,
+    lesson.id,
+    lesson.courseId,
+  );
+
+  const deleteLessonWithId = deleteLesson.bind(
     null,
     lesson.id,
     lesson.courseId,
@@ -76,6 +82,15 @@ export default async function LessonDetailPage({
           </button>
         </form>
       )}
+
+      <form action={deleteLessonWithId} className="mt-4">
+        <button
+          type="submit"
+          className="rounded-lg border px-4 py-2 text-red-500"
+        >
+          Lesson 삭제
+        </button>
+      </form>
 
       <Link
         href={`/courses/${lesson.courseId}`}

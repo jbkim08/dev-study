@@ -70,3 +70,17 @@ export async function updateLesson(
 
   redirect(`/lessons/${id}`);
 }
+
+export async function deleteLesson(id: number, courseId: number) {
+  await prisma.lesson.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath(`/courses/${courseId}`);
+  revalidatePath("/courses");
+  revalidatePath("/dashboard");
+
+  redirect(`/courses/${courseId}`);
+}
